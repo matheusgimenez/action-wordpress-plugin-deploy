@@ -12,12 +12,12 @@ set -eo
 # so do not echo or use debug mode unless you want your secrets exposed!
 if [[ -z "$SVN_USERNAME" ]]; then
 	echo "Set the SVN_USERNAME secret"
-	exit 1
+	#exit 1
 fi
 
 if [[ -z "$SVN_PASSWORD" ]]; then
 	echo "Set the SVN_PASSWORD secret"
-	exit 1
+	#exit 1
 fi
 
 # Set variables
@@ -66,7 +66,7 @@ if [[ -e "$GITHUB_WORKSPACE/.distignore" ]]; then
 else
 	echo "ℹ︎ Using .gitattributes"
 
-	cd "$GITHUB_WORKSPACE"
+	cd "$GITHUB_WORKSPACE/src"
 
 	# "Export" a cleaned copy to a temp directory
 	TMP_DIR="/github/archivetmp"
@@ -87,7 +87,9 @@ else
 		# Ensure we are in the $GITHUB_WORKSPACE directory, just in case
 		# The .gitattributes file has to be committed to be used
 		# Just don't push it to the origin repo :)
+		cd "$GITHUB_WORKSPACE"
 		git add .gitattributes && git commit -m "Add .gitattributes file"
+		cd "$GITHUB_WORKSPACE/src";
 	fi
 
 	# This will exclude everything in the .gitattributes file with the export-ignore flag
