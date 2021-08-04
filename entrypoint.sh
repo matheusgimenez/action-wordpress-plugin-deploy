@@ -64,9 +64,14 @@ if [[ -e "$GITHUB_WORKSPACE/.distignore" ]]; then
 	# The --delete flag will delete anything in destination that no longer exists in source
 	rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" trunk/ --delete --delete-excluded
 else
+
 	echo "ℹ︎ Using .gitattributes"
 	
 	cd "$GITHUB_WORKSPACE"
+	
+	git config --global user.email "10upbot+github@10up.com"
+	git config --global user.name "10upbot on GitHub"
+	
 	rm "$GITHUB_WORKSPACE/.gitignore"
 	git add "$GITHUB_WORKSPACE/.gitignore"
 	git commit -m "remove .gitignore"
@@ -77,8 +82,6 @@ else
 	TMP_DIR="/github/archivetmp"
 	mkdir "$TMP_DIR"
 
-	git config --global user.email "10upbot+github@10up.com"
-	git config --global user.name "10upbot on GitHub"
 
 	# If there's no .gitattributes file, write a default one into place
 	if [[ ! -e "$GITHUB_WORKSPACE/src/.gitattributes" ]]; then
