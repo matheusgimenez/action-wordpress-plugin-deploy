@@ -65,6 +65,10 @@ if [[ -e "$GITHUB_WORKSPACE/.distignore" ]]; then
 	rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" trunk/ --delete --delete-excluded
 else
 	echo "ℹ︎ Using .gitattributes"
+	
+	rm "$GITHUB_WORKSPACE/.gitignore"
+	git add "$GITHUB_WORKSPACE/.gitignore"
+	git commit -m "remove .gitignore"
 
 	cd "$GITHUB_WORKSPACE/src"
 
@@ -87,6 +91,7 @@ else
 		# Ensure we are in the $GITHUB_WORKSPACE directory, just in case
 		# The .gitattributes file has to be committed to be used
 		# Just don't push it to the origin repo :)
+		git add -A
 		git add .gitattributes && git commit -m "Add .gitattributes file"
 	fi
 
