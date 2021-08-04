@@ -66,6 +66,7 @@ if [[ -e "$GITHUB_WORKSPACE/.distignore" ]]; then
 else
 	echo "ℹ︎ Using .gitattributes"
 	
+	cd "$GITHUB_WORKSPACE"
 	rm "$GITHUB_WORKSPACE/.gitignore"
 	git add "$GITHUB_WORKSPACE/.gitignore"
 	git commit -m "remove .gitignore"
